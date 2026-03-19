@@ -1,216 +1,240 @@
-🏢 Sistema de Gestão de Condomínios
+# 🏢 Condominium Management System
 
-Sistema de gestão de condomínios desenvolvido com Java + Spring Boot, utilizando arquitetura de microserviços e integração com frontend em Angular 2.4.10.
+### Arquitetura de Microserviços com Spring Boot
 
-O projeto foi projetado com foco em modularização por domínio, escalabilidade e manutenção facilitada, seguindo boas práticas como DDD (Domain Driven Design) e separação em camadas.
+---
 
-🚀 Tecnologias Utilizadas
-🔧 Backend
+## 📌 Visão Executiva
 
-Java 17+
+O **Condominium Management System** é uma plataforma corporativa desenvolvida para gerenciar operações de condomínios de forma escalável, segura e modular.
 
-Spring Boot
+A solução adota uma arquitetura baseada em **microserviços**, permitindo a evolução independente de cada domínio de negócio, alta disponibilidade e facilidade de manutenção.
 
-Spring Cloud (Eureka, Config Server, Gateway)
+---
 
-Spring Data JPA
+## 🎯 Objetivos do Projeto
 
-Hibernate
+* Garantir **escalabilidade horizontal**
+* Promover **baixo acoplamento entre domínios**
+* Facilitar **manutenção e evolução contínua**
+* Implementar **boas práticas de arquitetura corporativa**
+* Suportar ambientes distribuídos e cloud-native
 
-Oracle Database
+---
 
-Maven
+## 🏗️ Arquitetura da Solução
 
-JWT (Spring Security)
+A aplicação segue princípios de:
 
-🎨 Frontend
+* **Microservices Architecture**
+* **Domain-Driven Design (DDD)**
+* **API First Design**
+* **Database per Service**
 
-Angular 2.4.10
+### 🔷 Componentes Principais
 
-Node.js 7.5.0
+* **API Gateway** → Ponto único de entrada
+* **Service Discovery** → Registro e descoberta de serviços
+* **Config Server** → Centralização de configurações
+* **Microserviços independentes**
+* **Mensageria (event-driven, opcional)**
 
-TypeScript
+### 📊 Diagrama Simplificado
 
-🧪 Testes
+```
+                ┌────────────────────┐
+                │    API Gateway     │
+                └─────────┬──────────┘
+                          │
+    ┌──────────────┬──────┼──────────────┬──────────────┐
+    │              │      │              │              │
+Funcionários   Administrativo  Contratos   Fornecedores   Financeiro
+ Service         Service       Service      Service       Service
+```
 
-JUnit
+---
 
-Mockito
+## 📦 Domínios / Microserviços
 
-🧩 Arquitetura
+### 👨‍💼 Funcionários Service
 
-O sistema é baseado em microserviços independentes, onde cada módulo representa um domínio do negócio.
+Gestão de colaboradores do condomínio.
 
-📌 Componentes principais
+* Cadastro de funcionários
+* Controle de cargos
+* Gestão de vínculos
 
-API Gateway
+---
 
-Entrada única para o frontend Angular
+### 🏢 Administrativo Service
 
-Responsável por roteamento e segurança
+Gestão estrutural do condomínio.
 
-Service Discovery (Eureka)
+* Cadastro de condomínios
+* Unidades (apartamentos/casas)
+* Gestão de moradores
 
-Registro e descoberta dinâmica dos serviços
+---
 
-Config Server
+### 📄 Contratos Service
 
-Centralização de configurações
+Controle de contratos com terceiros.
 
-📦 Módulos do Sistema
+* Cadastro de contratos
+* Controle de vigência
+* Alertas de expiração
 
-Cada módulo é um microserviço independente com sua própria base de dados (ou schema no Oracle).
+---
 
-👨‍💼 Funcionários (funcionarios-service)
+### 🤝 Fornecedores Service
 
-Cadastro e gestão de funcionários
+Gestão de parceiros e prestadores.
 
-Controle de cargos e vínculos com o condomínio
+* Cadastro de fornecedores
+* Classificação por serviço
+* Histórico de relacionamento
 
-🏢 Administrativo (administrativo-service)
+---
 
-Gestão de condomínios, blocos e unidades
+### 💰 Financeiro Service (Contas a Pagar)
 
-Configurações gerais
+Gestão financeira.
 
-📄 Contratos (contratos-service)
+* Contas a pagar
+* Controle de pagamentos
+* Relatórios financeiros
 
-Gestão de contratos de prestadores e fornecedores
+---
 
-Controle de vigência e renovações
+## ⚙️ Stack Tecnológica
 
-🚚 Fornecedores (fornecedores-service)
+| Categoria      | Tecnologia                  |
+| -------------- | --------------------------- |
+| Backend        | Java 17+, Spring Boot       |
+| Cloud          | Spring Cloud                |
+| Persistência   | JPA / Hibernate             |
+| Banco de Dados | PostgreSQL / Oracle         |
+| Build          | Maven / Gradle              |
+| Containers     | Docker                      |
+| Orquestração   | Kubernetes (opcional)       |
+| Segurança      | Spring Security + JWT       |
+| Mensageria     | RabbitMQ / Kafka (opcional) |
 
-Cadastro e gestão de fornecedores
+---
 
-Histórico de serviços
+## 📁 Estrutura do Repositório
 
-💰 Contas a Pagar (contas-pagar-service)
-
-Controle financeiro
-
-Registro e acompanhamento de despesas
-
-🗂️ Estrutura do Projeto
+```
 condominio-system/
 │
-├── api-gateway/
-├── service-discovery/
+├── gateway/
+├── discovery-server/
 ├── config-server/
 │
 ├── funcionarios-service/
 ├── administrativo-service/
 ├── contratos-service/
 ├── fornecedores-service/
-├── contas-pagar-service/
+├── financeiro-service/
 │
-├── frontend-angular/
-│
-└── common-lib/
-🧱 Padrão de Camadas (Backend)
+└── shared-libraries/
+```
 
-Cada microserviço segue a seguinte estrutura:
+---
 
-src/main/java/com/condominio/<modulo>/
-│
-├── controller/      # Camada REST
-├── service/         # Regras de negócio
-├── repository/      # Acesso a dados (JPA)
-├── domain/          # Entidades
-├── dto/             # Objetos de transferência
-├── config/          # Configurações
-└── exception/       # Tratamento de erros
-🔗 Comunicação entre Serviços
+## 🚀 Deploy e Execução
 
-REST (Spring OpenFeign)
+### 🔧 Pré-requisitos
 
-Autenticação via JWT
+* Java 17+
+* Maven ou Gradle
+* Docker (recomendado)
+* Banco de dados configurado
 
-Integração via API Gateway
+### ▶️ Execução Local
 
-🔐 Segurança
+```bash
+# Clonar repositório
+git clone https://github.com/empresa/condominio-system.git
 
-Autenticação com JWT
+# Acessar serviço
+cd funcionarios-service
 
-Autorização baseada em perfis:
-
-ADMIN
-
-SINDICO
-
-FUNCIONARIO
-
-Validação centralizada no Gateway
-
-▶️ Como Executar o Projeto
-📋 Pré-requisitos
-
-Java 17+
-
-Maven
-
-Node.js 7.5.0
-
-Oracle Database configurado
-
-🔄 Backend
-
-Subir os serviços na ordem:
-
-1. config-server
-2. service-discovery
-3. api-gateway
-4. microserviços
-
-Executar cada serviço:
-
-mvn clean install
+# Executar aplicação
 mvn spring-boot:run
-🎨 Frontend
-cd frontend-angular
-npm install
-npm start
-🧪 Testes
+```
 
-Execução de testes unitários:
+---
 
-mvn test
+## 🔗 Comunicação entre Serviços
 
-Uso de JUnit para testes
+* **REST APIs** (Feign Client / WebClient)
+* **Event-driven (opcional)** via mensageria
+* **API Gateway como orquestrador de entrada**
 
-Uso de Mockito para mock de dependências
+---
 
-Foco em testes de serviços e regras de negócio
+## 🔐 Segurança
 
-📊 Boas Práticas Aplicadas
+* Autenticação via **JWT**
+* Autorização baseada em papéis (RBAC)
+* Proteção centralizada via API Gateway
+* Integração futura com **OAuth2 / Identity Providers**
 
-Separação por domínio (DDD)
+---
 
-Arquitetura em microserviços
+## 📊 Observabilidade
 
-Baixo acoplamento
+* Logs centralizados (ELK Stack)
+* Monitoramento com Prometheus + Grafana
+* Health checks com Spring Actuator
 
-Alta coesão
+---
 
-Uso de DTOs para comunicação
+## 🧪 Qualidade e Testes
 
-Tratamento centralizado de exceções
+* Testes unitários (JUnit, Mockito)
+* Testes de integração (Spring Boot Test)
+* Pipeline CI/CD (recomendado)
 
-Testes automatizados
+---
 
-📈 Melhorias Futuras
+## 📈 Escalabilidade
 
-Mensageria (RabbitMQ ou Kafka)
+* Serviços independentes escaláveis
+* Deploy containerizado
+* Pronto para ambientes cloud (AWS, Azure, GCP)
 
-Observabilidade (Logs centralizados + métricas)
+---
 
-Circuit Breaker (Resilience4j)
+## 📌 Boas Práticas Adotadas
 
-Containerização com Docker
+* Separação por contexto de domínio
+* Uso de DTOs para comunicação
+* Versionamento de APIs
+* Baixo acoplamento entre serviços
+* Configuração externa (12-factor app)
 
-Orquestração com Kubernetes
+---
 
-Pipeline CI/CD
+## 🤝 Contribuição
 
+1. Fork do repositório
+2. Criação de branch (`feature/<nome>`)
+3. Commit das alterações
+4. Push para o repositório
+5. Abertura de Pull Request
 
+---
 
+## 📄 Licença
+
+Este projeto está sob a licença a definir
+
+---
+
+## 📬 Contato
+
+Projeto desenvolvido com foco em arquitetura corporativa moderna e boas práticas de engenharia de software.
+
+---
