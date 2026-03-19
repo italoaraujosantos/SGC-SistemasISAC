@@ -155,7 +155,7 @@ condominio-system/
 
 ```bash
 # Clonar repositório
-git clone https://github.com/empresa/condominio-system.git
+git clone https://github.com/italoaraujosantos/SGC-SistemasISACgit
 
 # Acessar serviço
 cd funcionarios-service
